@@ -1,8 +1,8 @@
 {
 	"name": "pebble-tool",
 	"displayName": "Pebble Tool",
-	"description": "Tools to assist with Pebble smartwatch development, requires the Pebble SDK to be installed. See https://willow.systems/pebble-tool for more",
-	"version": "0.0.5",
+	"description": "Nix Tools to assist with Pebble smartwatch development, requires the Pebble SDK to be installed. See https://willow.systems/pebble-tool for more",
+	"version": "0.0.6",
 	"engines": {
 		"vscode": "^1.53.0"
 	},

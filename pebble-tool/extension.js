@@ -2,6 +2,13 @@
 // Import the module and reference it with the alias vscode in your code below
 const vscode = require('vscode');
 const { exec, execSync } = require("child_process");
+// wrap exec to use nix-shell
+const nix_exec = (cmd, callback) => {
+	return exec(`nix-shell 2> /dev/null --run '${cmd}'`, (error, stdout, stderr) => {
+		callback(error, stdout, stderr);
+	});
+};
+
 let buildData = {
 	built: false,
 	output: "",
@@ -56,7 +63,7 @@ function activate(context) {
 		}
 
 
-		exec("pebble build", (error, stdout, stderr) => {
+		nix_exec("pebble build", (error, stdout, stderr) => {
 
 			if (error) {
 				buildData.output = error.message;
@@ -140,7 +147,7 @@ function activate(context) {
 		}
 
 
-		exec(`pebble install --emulator ${tempEmu}`, (error, stdout, stderr) => {
+		nix_exec(`pebble install --emulator ${tempEmu}`, (error, stdout, stderr) => {
 
 			if (error) {
 				buildData.installLog = error.message;
@@ -227,7 +234,7 @@ function activate(context) {
 					ctx.outputChannel.show();
 					ctx.outputChannel.appendLine("Run: '" + cmd + "'");
 					{
-						exec(cmd, (error, stdout, stderr) => {
+						nix_exec(cmd, (error, stdout, stderr) => {
 
 							if (error) {
 
@@ -336,7 +343,7 @@ function activate(context) {
 
 			//Build
 			vscode.window.setStatusBarMessage(`Building app`);
-			exec("pebble build", (error, stdout, stderr) => {
+			nix_exec("pebble build", (error, stdout, stderr) => {
 
 				if (error) {
 					buildData.output = error.message;
@@ -379,14 +386,16 @@ function noPebbleTooling(asModal = true) {
 	var fail = false;
 
 	try {
-		whichPebble = execSync("which pebble")
+		whichPebble = nix_exec("which pebble")
 	} catch (e) {
 		fail = true
+		vscode.window.showErrorMessage(e)
 		console.log(e)
 	}
 	if (whichPebble == "") {
 		fail = true
 		console.log("Blank: " + whichPebble);
+		vscode.window.showErrorMessage("Blank: " + whichPebble);
 	}
 		
 	if (fail) {
@@ -449,7 +458,7 @@ function installOnPhone() {
 	}
 
 
-	exec(`pebble install --phone ${ctx.phoneIP}`, (error, stdout, stderr) => {
+	nix_exec(`pebble install --phone ${ctx.phoneIP}`, (error, stdout, stderr) => {
 
 		if (error) {
 			buildData.installLog = error.message;
