@@ -1,16 +1,16 @@
 {
-	"name": "pebble-tool",
-	"displayName": "Pebble Tool",
-	"description": "Nix Tools to assist with Pebble smartwatch development, requires the Pebble SDK to be installed. See https://willow.systems/pebble-tool for more",
+	"name": "pebble-tool-nix",
+	"displayName": "Pebble Tool Nix",
+	"description": "Tools to assist with Pebble smartwatch development. Forked from https://github.com/Willow-Systems/pebble-tool-vscode-extension and modified to use Nix Shell (https://github.com/andyburris/pebble-setup?tab=readme-ov-file). Requires the Pebble SDK to be installed. See https://willow.systems/pebble-tool for more",
 	"version": "0.0.6",
 	"engines": {
 		"vscode": "^1.53.0"
 	},
-	"publisher": "WillowSystems",
+	"publisher": "sspathak",
 	"icon": "icon.png",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/Willow-Systems/pebble-tool-vscode-extension.git"
+		"url": "https://github.com/sspathak/pebble-tool-vscode-extension.git"
 	},
 	"categories": [
 		"Other"
